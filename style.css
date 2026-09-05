@@ -1209,6 +1209,15 @@ body::after {
   color: var(--text-muted);
 }
 
+.instructions-body .instructions-tip {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--surface-border);
+  font-style: italic;
+}
+
 /* ═══════════════════════════════════════════════════════════
    Confirm Dialog
    ═══════════════════════════════════════════════════════════ */
