@@ -7,10 +7,11 @@
   "use strict";
 
   /* ── Constants ──────────────────────────────────────────── */
-  var STORAGE_KEY = "weighted_decision_matrix";
-  var THEME_KEY   = "decision_matrix_theme";
-  var MATH_KEY    = "decision_matrix_show_math";
-  var SIDEBAR_KEY = "decision_matrix_sidebar_collapsed";
+  var STORAGE_KEY       = "weighted_decision_matrix";
+  var THEME_KEY         = "decision_matrix_theme";
+  var MATH_KEY          = "decision_matrix_show_math";
+  var SIDEBAR_KEY       = "decision_matrix_sidebar_collapsed";
+  var INSTRUCTIONS_KEY  = "druthers_has_seen_instructions";
 
   /* ── Helpers ────────────────────────────────────────────── */
   function uid() { return Math.random().toString(36).substring(2, 9); }
@@ -156,8 +157,23 @@
   /* ══════════════════════════════════════════════════════════
      Instructions Modal
      ══════════════════════════════════════════════════════════ */
-  function openInstructions() { $("#instructions-overlay").classList.add("open"); }
-  function closeInstructions() { $("#instructions-overlay").classList.remove("open"); }
+  function openInstructions() {
+    $("#instructions-overlay").classList.add("open");
+  }
+
+  function closeInstructions() {
+    $("#instructions-overlay").classList.remove("open");
+    try { localStorage.setItem(INSTRUCTIONS_KEY, "true"); } catch (_) {}
+  }
+
+  function checkFirstVisit() {
+    var hasSeen = false;
+    try { hasSeen = localStorage.getItem(INSTRUCTIONS_KEY) === "true"; } catch (_) {}
+    if (!hasSeen) {
+      openInstructions();
+      try { localStorage.setItem(INSTRUCTIONS_KEY, "true"); } catch (_) {}
+    }
+  }
 
   /* ══════════════════════════════════════════════════════════
      Rendering
@@ -607,6 +623,7 @@
     updateToggleTooltip();
     render();
     initEvents();
+    checkFirstVisit();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
