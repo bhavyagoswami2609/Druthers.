@@ -1,0 +1,15 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Build and deployment caches
+.wrangler/
+dist/
+node_modules/
